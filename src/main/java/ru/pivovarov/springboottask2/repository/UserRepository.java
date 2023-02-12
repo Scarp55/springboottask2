@@ -5,27 +5,23 @@ import ru.pivovarov.springboottask2.model.Authorities;
 import ru.pivovarov.springboottask2.model.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
 public class UserRepository {
+    List<User> userList = new ArrayList<>();
 
-    private final User admin = new User("admin", "123");
-    private final User developer = new User("developer", "456");
-    private final User worker = new User("worker", "789");
-    private final List<Authorities> adminAuthorities = Arrays.asList(Authorities.DELETE, Authorities.READ, Authorities.WRITE);
-    private final List<Authorities> developerAuthorities = Arrays.asList(Authorities.DELETE, Authorities.READ);
-    private final List<Authorities> workerAuthorities = List.of(Authorities.READ);
+    public UserRepository() {
+        userList.add(new User("admin", "123", List.of(Authorities.WRITE, Authorities.READ, Authorities.DELETE)));
+        userList.add(new User("developer", "456", List.of(Authorities.READ, Authorities.DELETE)));
+        userList.add(new User("worker", "789", List.of(Authorities.READ)));
+    }
 
-
-    public List<Authorities> getUserAuthorities(String user, String password) {
-        if (admin.getName().equals(user) && (admin.getPassword().equals(password))) {
-            return adminAuthorities;
-        } else if (developer.getName().equals(user) && (developer.getPassword().equals(password))) {
-            return developerAuthorities;
-        } else if (worker.getName().equals(user) && (worker.getPassword().equals(password))) {
-            return workerAuthorities;
+    public List<Authorities> getUserAuthorities(String name, String password) {
+        for (User user : userList) {
+            if (user.getName().equals(name) && user.getPassword().equals(password)) {
+                return user.getAuthoritiesList();
+            }
         }
         return new ArrayList<>();
     }

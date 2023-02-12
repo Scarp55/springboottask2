@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -18,4 +21,5 @@ public class User {
     @NotBlank
     @Size(min = 4, max = 8)
     private String password;
+    private List<Authorities> authoritiesList;
 }
