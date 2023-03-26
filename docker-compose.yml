@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  dockerapp:
+    build: ./
+    image: "app:2.0"
+    ports:
+      - '8080:8080'
